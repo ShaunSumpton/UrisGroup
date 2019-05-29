@@ -34,6 +34,9 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.OneCall = new System.Windows.Forms.RadioButton();
+            this.AutoNet = new System.Windows.Forms.RadioButton();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,11 +94,46 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // OneCall
+            // 
+            this.OneCall.AutoSize = true;
+            this.OneCall.Font = new System.Drawing.Font("Open Sans", 14F);
+            this.OneCall.Location = new System.Drawing.Point(16, 89);
+            this.OneCall.Name = "OneCall";
+            this.OneCall.Size = new System.Drawing.Size(101, 30);
+            this.OneCall.TabIndex = 6;
+            this.OneCall.TabStop = true;
+            this.OneCall.Text = "OneCall";
+            this.OneCall.UseVisualStyleBackColor = true;
+            // 
+            // AutoNet
+            // 
+            this.AutoNet.AutoSize = true;
+            this.AutoNet.Font = new System.Drawing.Font("Open Sans", 14F);
+            this.AutoNet.Location = new System.Drawing.Point(138, 89);
+            this.AutoNet.Name = "AutoNet";
+            this.AutoNet.Size = new System.Drawing.Size(104, 30);
+            this.AutoNet.TabIndex = 7;
+            this.AutoNet.TabStop = true;
+            this.AutoNet.Text = "AutoNet";
+            this.AutoNet.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(19, 129);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(222, 82);
+            this.listBox1.TabIndex = 8;
+            // 
             // UrisGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(449, 239);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.AutoNet);
+            this.Controls.Add(this.OneCall);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textBox2);
@@ -118,6 +156,9 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton OneCall;
+        private System.Windows.Forms.RadioButton AutoNet;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

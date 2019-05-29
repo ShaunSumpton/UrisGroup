@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UrisGroup;
 using SortAndSave;
 
 
@@ -17,6 +12,7 @@ namespace UrisGroup
 
         public static void BBSNow(String en, String md, String jn)
         {
+            
             DateTime Newmd = DateTime.Parse(md);
             string dir = Path.GetDirectoryName(en);
             Directory.CreateDirectory(dir + "\\" + "BBS");
@@ -28,10 +24,13 @@ namespace UrisGroup
             BBSAPI.SetReference(jn);
             BBSAPI.SetCollectionDate(md.ToString());
             BBSAPI.SetHandoverDate(Newmd.AddDays(1).ToString());
+    
 
-
+           BBSAPI.RunMailingJob("C:\\TEST FOLDER\\URIS.JOB");
 
             var MyIni = new IniFile("C:\\TEST FOLDER\\URIS.JOB");
+
+            MyIni.Write("", "","Data Sources");
             MyIni.Write("Weight", "100", "InitialInfo");
 
 
@@ -52,7 +51,7 @@ namespace UrisGroup
 
         }
 
-
+        
 
     }
 

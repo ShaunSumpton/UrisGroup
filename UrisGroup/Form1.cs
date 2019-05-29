@@ -34,7 +34,7 @@ namespace UrisGroup
                 MessageBox.Show("Please Enter the Mailing Date"); // check if a mailing date has been entered
                 this.Close();
                 Application.Exit();
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
 
             if (textBox2.Text.Length == 0)
@@ -43,25 +43,29 @@ namespace UrisGroup
                 MessageBox.Show("Please Enter the Job Number"); // check if a job number has been entered
                 this.Close();
                 Application.Exit();
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
 
+            listBox1.Items.Add("Selecting File ...."); // keep user updated
 
             OpenFileDialog openFileDialog2 = new OpenFileDialog(); // open file dialog to select encrypted file
             openFileDialog2.Filter = "pgp files (*.pgp)|*.pgp|All files (*.*)|*.*";
             openFileDialog2.ShowDialog();
 
-            EncryptedFiles = openFileDialog2.FileName;
-            MessageBox.Show(EncryptedFiles);
+            EncryptedFiles = openFileDialog2.FileName; // get file path for PGP 
 
-            DecryptFiles(EncryptedFiles, Password, key, JobNumber);
+            //MessageBox.Show(EncryptedFiles);
 
-            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber);
+            listBox1.Items.Add("Decrypting File ....");
+            DecryptFiles(EncryptedFiles, Password, key, JobNumber); // Decrypt files
+
+            listBox1.Items.Add("Prepearing Mailing Job ....");
+            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber); // run BBS Job
 
 
-            //CreateData();
+            //CreateData(); // add booklet barcode and job number to export file
 
-            //Composer():
+            //Composer(): // prepare file for composer and place on server
 
         }
 
