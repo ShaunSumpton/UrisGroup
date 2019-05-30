@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using SortAndSave;
-
+using MadMilkman.Ini;
+using System.Windows.Forms;
 
 namespace UrisGroup
 {
@@ -24,15 +25,39 @@ namespace UrisGroup
             BBSAPI.SetReference(jn);
             BBSAPI.SetCollectionDate(md.ToString());
             BBSAPI.SetHandoverDate(Newmd.AddDays(1).ToString());
-    
 
-           BBSAPI.RunMailingJob("C:\\TEST FOLDER\\URIS.JOB");
+           var MyIni = new IniFile("C:\\TEST FOLDER\\URIS.JOB");
+            string FileLoc = "One Call" + "," + "One Call" + "," + "C:\\TEST FOLDER\\" + jn + ".xls" + "," + "31/12/2019" + "," + "'One Call Fulfillment Template -$'";
+            MyIni.Write(" ", FileLoc, "Data Sources");
+            
 
-            var MyIni = new IniFile("C:\\TEST FOLDER\\URIS.JOB");
+            int result = BBSAPI.RunMailingJob("C:\\TEST FOLDER\\URIS.JOB");
 
-            MyIni.Write("", "","Data Sources");
-            MyIni.Write("Weight", "100", "InitialInfo");
+            MessageBox.Show(result.ToString());
 
+
+
+          
+
+            
+
+            
+
+            //Console.WriteLine("1234","1234", "C:\\TEST FOLDER\\1234.xls", "31/12/2199","'Test'");
+
+
+
+           // IniOptions options = new IniOptions();
+           // IniFile iniFile = new IniFile(options);
+
+            // Load file from path.
+            //iniFile.Load(@"C:\\TEST FOLDER\\URIS.JOB");
+
+            
+           // MyIni.Write("Weight", "100", "InitialInfo");
+           // MyIni.Write("OutputBase", dir + "\\" + "BBS", "InitialInfo");
+
+           // BBSAPI.RunMailingJob("C:\\TEST FOLDER\\URIS.JOB");
 
 
 
@@ -51,7 +76,7 @@ namespace UrisGroup
 
         }
 
-        
+
 
     }
 
