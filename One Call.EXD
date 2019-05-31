@@ -1,0 +1,33 @@
+[InitialInfo]
+Version=10.40B
+Format=CSV
+MailBreak=N,0,
+
+[FileExtras]
+HeaderPresent=Y
+
+[FieldList]
+1,U,Policy Number,1,-1,-1,33,
+2,U,Title,1,-1,-1,33,
+3,U,Fname,1,-1,-1,33,
+4,U,Sname,1,-1,-1,33,
+5,U,DOB,1,-1,-1,33,
+6,U,Address 1,1,-1,-1,33,
+7,U,Address2,1,-1,-1,33,
+8,U,Address3,1,-1,-1,33,
+9,U,Address4,1,-1,-1,33,
+10,U,Postcode,1,-1,-1,33,
+11,U,Monthly Premium,1,-1,-1,33,
+12,U,Policy Start Date,1,-1,-1,33,
+13,U,Sum Insured,1,-1,-1,33,
+14,U,DD date,1,-1,-1,33,
+15,U,Account Name,1,-1,-1,33,
+16,U,Account Number,1,-1,-1,33,
+17,U,Sort Code,1,-1,-1,33,
+18,U,DD day,1,-1,-1,33,
+19,U,DD month and year,1,-1,-1,33,
+20,U,DD Reference,1,-1,-1,33,
+21,C,CARRIER BAG ID,1,-1,-1,15,
+22,C,SORT CODE,1,S-******   ,,9,
+
+

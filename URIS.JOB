@@ -1,0 +1,50 @@
+[InitialInfo]
+Version=10.40B
+Description=URIS
+JobReference=URIS
+PoNumber=
+CellReference=
+Weight=100
+SeparateExports=0
+Letter/Packet=5,0,1
+Sustainable=0,N
+DeliveryDays=2
+RunMode=1,-1,1,1
+OutputBase=C:\TEST FOLDER\BBS\
+CollectionDate=28/05/2019
+HandoverDate=29/05/2019
+Container=1
+MaxTrayItems=0
+ParameterFileStorage=1
+MailmarkJobMode=1
+IncludeAutoSeeds=1
+IncludeSeedsGroup=
+AddToMailingGroup=0
+MailingGroupName=
+BarcodeReturnPostcode=TS18 3TR
+MailmarkDBOption=0
+MailmarkReportingCampaignName=,
+MailmarkReportingSubDivision=
+MailmarkDefaultUserData=
+JicOption=1
+AutoSalesYourRef=
+AutoSalesConsignmentRef=
+AutoSalesMagazineCode=
+AutoSalesIssueID=
+CanUseLowerSort=0
+
+[Data Sources]
+One Call,One Call,C:\TEST FOLDER\12345.xls,31/12/2019,'One Call Fulfillment Template -$'
+
+
+[Carrier RM]
+UseRM=Y
+EproAccount=URIS LIMITED
+
+[Carrier TNT]
+
+[Carrier CP]
+
+[Carrier UKM]
+
+[Carrier SEC]

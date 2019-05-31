@@ -1,0 +1,61 @@
+[InitialInfo]
+Version=10.40B
+FileType=EX
+Database=\\6.1.1.220\projects\Direct Group Limited\245733 - One Call Fulfillment 210519\Data\One Call Fulfillment Template - 210519 EX.xlsx
+
+[FileExtras]
+HeaderPresent=Y
+
+[FieldList]
+1,-1,4,Policy Number
+2,-1,4,Title
+3,-1,4,Fname
+4,-1,4,Sname
+5,-1,4,DOB
+6,-1,4,Address 1
+7,-1,4,Address2
+8,-1,4,Address3
+9,-1,4,Address4
+10,-1,4,Postcode
+11,-1,4,Monthly Premium
+12,-1,4,Policy Start Date
+13,-1,4,Sum Insured
+14,-1,4,DD date
+15,-1,4,Account Name
+16,-1,4,Account Number
+17,-1,4,Sort Code
+18,-1,4,DD day
+19,-1,4,DD month and year
+20,-1,4,DD Reference
+
+[Mappings]
+1,REFNO,0,
+2,NAME,1,Sname
+3,LINE 1,1,Address 1
+4,LINE 2,1,Address2
+5,LINE 3,1,Address3
+6,LINE 4,1,Address4
+7,LINE 5,0,
+8,LINE 6,0,
+9,LINE 7,0,
+10,LINE 8,0,
+11,POSTCODE,1,Postcode
+12,DPS,0,
+13,MAIL THIS TIME,0,
+14,SPARE 1,0,
+15,SPARE 2,0,
+16,JOB TITLE,0,
+17,COMPANY,0,
+18,WEIGHT,0,
+19,COPIES,0,
+20,FORMAT,0,
+21,MAILMARK USER DATA,0,
+22,BARCODE,0,
+23,COUNTRY NAME,0,
+24,EXCLUSION FLAGS,0,
+25,SPLIT CODE,0,
+26,DX EXCHANGE,0,
+27,DX NUMBER,0,
+28,THICKNESS,0,
+
+

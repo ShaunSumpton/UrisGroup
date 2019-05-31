@@ -17,23 +17,27 @@ namespace UrisGroup
             DateTime Newmd = DateTime.Parse(md);
             string dir = Path.GetDirectoryName(en);
             Directory.CreateDirectory(dir + "\\" + "BBS");
-            
-            BBSAPI.SetInstallationFolder("C:\\SORTANDSAVE");
+
+            BBSAPI.ResetMailingOptions();
+            BBSAPI.SetInstallationFolder("C:\\SORTANDSAVE\\SYSTEM\\");
             BBSAPI.SetOutputBase(dir + "\\" + "BBS");
             BBSAPI.SetWeight(30);
             BBSAPI.SetDescription(jn);
             BBSAPI.SetReference(jn);
             BBSAPI.SetCollectionDate(md.ToString());
             BBSAPI.SetHandoverDate(Newmd.AddDays(1).ToString());
+            BBSAPI.SetInput(1,"C:\\TEST FOLDER\\" + jn + ".xls");
+            BBSAPI.SetTable(1, "One Call Fulfillment Template -$");
 
-           var MyIni = new IniFile("C:\\TEST FOLDER\\URIS.JOB");
-            string FileLoc = "One Call" + "," + "One Call" + "," + "C:\\TEST FOLDER\\" + jn + ".xls" + "," + "31/12/2019" + "," + "'One Call Fulfillment Template -$'";
-            MyIni.Write(" ", FileLoc, "Data Sources");
-            
 
-            int result = BBSAPI.RunMailingJob("C:\\TEST FOLDER\\URIS.JOB");
+            //var MyIni = new IniFile("C:\\TEST FOLDER\\URIS.JOB");
+            //string FileLoc = "One Call" + "," + "One Call" + "," + "C:\\TEST FOLDER\\" + jn + ".xls" + "," + "31/12/2019" + "," + "'One Call Fulfillment Template -$'";
+            // MyIni.Write("Data Sources",FileLoc);
 
-            MessageBox.Show(result.ToString());
+            string mjob = "C:\\TEST FOLDER\\URIS.JOB";
+            int result =  BBSAPI.RunMailingJob(mjob);
+
+           MessageBox.Show(result.ToString());
 
 
 
