@@ -44,8 +44,9 @@
     <Reference Include="PgpCore, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PgpCore.1.4.1\lib\netstandard1.3\PgpCore.dll</HintPath>
     </Reference>
-    <Reference Include="SORTANDSAVE">
-      <HintPath>..\..\UrisOneCallAutoNet\SORTANDSAVE.EXE</HintPath>
+    <Reference Include="SORTANDSAVE, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\SORTANDSAVE\SYSTEM\SORTANDSAVE.EXE</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

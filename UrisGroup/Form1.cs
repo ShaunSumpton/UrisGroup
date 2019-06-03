@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PgpCore;
 
+
 namespace UrisGroup
 {
     public partial class UrisGroup : Form
@@ -17,6 +18,8 @@ namespace UrisGroup
         public UrisGroup()
         {
             InitializeComponent();
+            
+
         }
 
         public void button1_Click(object sender, EventArgs e)
