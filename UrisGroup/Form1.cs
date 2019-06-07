@@ -9,16 +9,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PgpCore;
+using CsvHelper;
+using System.Data.SqlClient;
+
+
 
 
 namespace UrisGroup
 {
     public partial class UrisGroup : Form
+
+
+
+
+
     {
         public UrisGroup()
         {
             InitializeComponent();
             
+
 
         }
 
@@ -57,7 +67,10 @@ namespace UrisGroup
 
             EncryptedFiles = openFileDialog2.FileName; // get file path for PGP 
 
-            //MessageBox.Show(EncryptedFiles);
+          
+
+            // check what type of file we are working with
+            bool csv = EncryptedFiles.Contains("csv");
 
             listBox1.Items.Add("Decrypting File ....");
             DecryptFiles(EncryptedFiles, Password, key, JobNumber); // Decrypt files
@@ -66,7 +79,7 @@ namespace UrisGroup
             BBS.BBSNow(EncryptedFiles, MailDate, JobNumber); // run BBS Job
 
 
-            //CreateData(); // add booklet barcode and job number to export file
+            CSV.CreateData(JobNumber); // add booklet barcode and job number to export file
 
             //Composer(): // prepare file for composer and place on server
 
@@ -86,6 +99,50 @@ namespace UrisGroup
 
         }
 
-        
+       
+        private BindingSource bindingSource1 = new BindingSource();
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+           
+            {
+             
+                using (var reader = new StreamReader(@"C:\TEST FOLDER\BBS\URIS_EXP.CSV"))
+                using (var csv = new CsvReader(reader))
+                
+
+
+                {
+                    // Do any configuration to `CsvReader` before creating CsvDataReader.
+                  
+                    using (var dr = new CsvDataReader(csv))
+                    {
+                        var dt = new DataTable();
+                        dt.Load(dr);
+                        dataGridView1.DataSource = dt;
+                    }
+
+                    
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+        }
+
+      
+
+
     }
 }

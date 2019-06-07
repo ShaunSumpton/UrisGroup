@@ -27,7 +27,7 @@ HeaderPresent=Y
 18,U,DD day,1,-1,-1,33,
 19,U,DD month and year,1,-1,-1,33,
 20,U,DD Reference,1,-1,-1,33,
-21,C,CARRIER BAG ID,1,-1,-1,15,
-22,C,SORT CODE,1,S-******   ,,9,
+21,C,SORT CODE,1,S-******   ,,9,
+22,C,CARRIER BAG ID,1,-1,-1,15,
 
 
