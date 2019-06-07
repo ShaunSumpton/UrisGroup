@@ -99,8 +99,8 @@ namespace UrisGroup
 
         }
 
-       
-        private BindingSource bindingSource1 = new BindingSource();
+
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -115,11 +115,43 @@ namespace UrisGroup
 
                 {
                     // Do any configuration to `CsvReader` before creating CsvDataReader.
-                  
+                  csv.
                     using (var dr = new CsvDataReader(csv))
                     {
                         var dt = new DataTable();
                         dt.Load(dr);
+
+                        var dt2 = new DataTable();
+                        dt2 = dt.Clone();
+
+                        dt.Columns.Add("bmbarcode1", typeof(string)).SetOrdinal(0);
+                        dt.Columns.Add("bmbarcode2", typeof(string)).SetOrdinal(1);
+                        dt.Columns.Add("bmbarcode3", typeof(string)).SetOrdinal(2);
+                        dt.Columns.Add("bmbarcode4", typeof(string)).SetOrdinal(3);
+                        dt.Columns.Add("JobNumber", typeof(string)).SetOrdinal(4);
+
+                        CSV.ToCSV(dt, @"C:\TEST FOLDER\Test.csv");
+
+                         int totalRows = dt.Rows.Count;
+                        int r = 0;
+                        DataRow dtRow; 
+
+                        do
+                        {
+                            dtRow = dt2.NewRow();
+     
+                            dtRow[0] = "1001";
+                            dtRow[1] = "1001";
+                            dtRow[2] = "1001";
+                            dtRow[3] = "1001";
+                            dt2.Rows.Add(dtRow);
+
+                            r++;
+
+                        } while (r < totalRows);
+
+                    
+
                         dataGridView1.DataSource = dt;
                     }
 
@@ -141,7 +173,8 @@ namespace UrisGroup
 
         }
 
-      
+
+        
 
 
     }
