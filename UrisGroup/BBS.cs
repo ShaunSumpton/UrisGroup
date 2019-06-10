@@ -13,13 +13,31 @@ namespace UrisGroup
         static private string InstallFlder = "C:\\SORTANDSAVE\\SYSTEM\\";             // set sort and save system folder
         
 
-        public static void BBSNow(String en, String md, String jn)
+        public static void BBSNow(String en, String md, String jn,bool csv)
         {
-           
-            DateTime Newmd = DateTime.Parse(md);                                    // Mail Date
-            string dir = Path.GetDirectoryName(en);                                //Get directory we are working in
-            Directory.CreateDirectory(dir + "\\" + "BBS\\");                      // create a folder for BBS Files
 
+            DateTime Newmd = DateTime.Parse(md);                                  // Mail Date
+            string ex;
+            string mjob;
+            string dir = Path.GetDirectoryName(en);                                //Get directory we are working in
+            Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
+
+
+
+            // check if we are extracting a csv or xls
+
+            if (csv == true)
+            {
+                // open excel import csv and save as xls
+                CSV.ConvertCSV(jn, dir);
+
+            }
+            else
+            {
+                // not really needed at this point
+                ex = ".xls";
+            }
+            
 
             File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + jn + ".EXD");
             File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + jn + ".IMD");
@@ -33,12 +51,10 @@ namespace UrisGroup
             BBSAPI.SetCollectionDate(Newmd.ToString("yyyyMMdd"));
             BBSAPI.SetHandoverDate(Newmd.AddDays(1).ToString("yyyymmdd"));
             BBSAPI.SetInput(1,dir + "\\" + jn  + ".xls");
+            //BBSAPI.SetTable(1, "One Call Fulfillment Template -$");
 
+            mjob = "G:\\Development\\BBS Definition Files\\URIS.JOB";
 
-           // BBSAPI.SetTable(1, "One Call Fulfillment Template -");
-
-
-            string mjob = "G:\\Development\\BBS Definition Files\\URIS.JOB";
             int result = BBSAPI.RunMailingJob(mjob);
 
             MessageBox.Show(result.ToString());

@@ -59,6 +59,12 @@ namespace UrisGroup
                 Environment.Exit(0);
             }
 
+            // check if we are doing an autonet or onecall
+
+
+
+
+
             listBox1.Items.Add("Selecting File ...."); // keep user updated
 
             OpenFileDialog openFileDialog2 = new OpenFileDialog(); // open file dialog to select encrypted file
@@ -67,31 +73,48 @@ namespace UrisGroup
 
             EncryptedFiles = openFileDialog2.FileName; // get file path for PGP 
 
+            listBox1.Items.Add("*DONE*");
+
 
 
             // check what type of file we are working with
             bool csv = EncryptedFiles.Contains("csv");
 
             listBox1.Items.Add("Decrypting File ....");
-            DecryptFiles(EncryptedFiles, Password, key, JobNumber); // Decrypt files
+            DecryptFiles(EncryptedFiles, Password, key, JobNumber, csv); // Decrypt files
+            listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
-            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber); // run BBS Job
+            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv); // run BBS Job
+            listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Creating Output File ....");
             CSV.CreateData(JobNumber); // add booklet barcode and job number to export file
+            CSV.ReplaceTxt(EncryptedFiles, JobNumber); //replace £
+            listBox1.Items.Add("*DONE*");
 
             //Composer(): // prepare file for composer and place on server
 
         }
 
-        public void DecryptFiles(string EncryptedFiles, string Password, string key, string JobNumber)
+        public void DecryptFiles(string EncryptedFiles, string Password, string key, string JobNumber, bool csv) // decrypt files
         {
+            string ex;
+
+            // check if we are extracting a csv or xls
+            if (csv == true)
+            {
+                ex = ".csv";
+
+            }
+            else ex = ".xls";
+
+
             using (PGP pgp = new PGP())
             {
                 string directory = Path.GetDirectoryName(EncryptedFiles);
 
-                pgp.DecryptFile(@EncryptedFiles, Path.Combine(directory, JobNumber + ".xls"), @key, Password);
+                pgp.DecryptFile(@EncryptedFiles, Path.Combine(directory, JobNumber + ex), @key, Password);
 
 
             }
@@ -102,11 +125,7 @@ namespace UrisGroup
 
 
 
-        private void button2_Click(object sender, EventArgs e)
-        {
 
-            string jn = textBox1.Text;
-        }
     }
 }
    

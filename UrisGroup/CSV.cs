@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Table;
+using OfficeOpenXml.Drawing.Chart;
+using System.Globalization;
 using CsvHelper;
+using System.Data;
+
 
 
 namespace UrisGroup
@@ -31,12 +34,12 @@ namespace UrisGroup
                     var dt = new DataTable();
                     dt.Load(dr);
 
-
+                    // Create new columns to be appended the start of the datatable
                     DataColumn newCol = new DataColumn("SER", typeof(string));
-                    DataColumn newCol1 = new DataColumn("bmbarcode1", typeof(string));
-                    DataColumn newCol2 = new DataColumn("bmbarcode2", typeof(string));
-                    DataColumn newCol3 = new DataColumn("bmbarcode3", typeof(string));
-                    DataColumn newCol4 = new DataColumn("bmbarcode4", typeof(string));
+                    DataColumn newCol1 = new DataColumn("BMbarcode1", typeof(string));
+                    DataColumn newCol2 = new DataColumn("BMbarcode2", typeof(string));
+                    DataColumn newCol3 = new DataColumn("BMbarcode3", typeof(string));
+                    DataColumn newCol4 = new DataColumn("BMbarcode4", typeof(string));
                     DataColumn newCol5 = new DataColumn("JobNumber", typeof(string));
 
                     // Add new columns for Barcodes
@@ -55,7 +58,7 @@ namespace UrisGroup
                     newCol4.SetOrdinal(4);
                     newCol5.SetOrdinal(5);
 
-
+                    //loop through each row and add data
                     foreach (DataRow row in dt.Rows)
                     {
                         row["SER"] = SER.ToString("000");
@@ -70,9 +73,9 @@ namespace UrisGroup
                     }
 
 
-                    //ToCSV(dt, @"C:\TEST FOLDER\Test.csv");
-
-                    using (var textWriter = File.CreateText(@"C:\TEST FOLDER\output.txt"))
+                    
+                    // output to txt file
+                    using (var textWriter = File.CreateText(@"C:\TEST FOLDER\"+ jn + @".txt"))
                     using (var csv1 = new CsvWriter(textWriter))
                     {
                         // Write columns
@@ -102,10 +105,62 @@ namespace UrisGroup
 
             }
         }
-        
+
+       public static void ReplaceTxt(string en, string jn)
+        {
+
+            string dir = Path.GetDirectoryName(en);
+
+            string str = File.ReadAllText(dir + "\\" + jn + ".txt");
+            str = str.Replace("?", "£");
+            File.WriteAllText(dir + "\\" + jn + ".txt", str);
+
+
+        }
+
+       public static void ConvertCSV(string jn, string dir)
+        {
+
+            var format = new ExcelTextFormat();
+            format.TextQualifier = '"';
+            format.Delimiter = ',';
+            format.Encoding = new UTF8Encoding();
+            format.DataTypes = new eDataTypes[] {eDataTypes.String, eDataTypes.String, eDataTypes.String, eDataTypes.String, eDataTypes.String,
+                eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,
+                eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,
+                eDataTypes.String,eDataTypes.String,eDataTypes.String };
+             
+
+            FileInfo file = new FileInfo(dir + "\\" + jn + ".csv");
+
+            using (var p = new ExcelPackage())
+            {
+
+                //Add the sheet to the workbook 
+                ExcelWorksheet worksheet = p.Workbook.Worksheets.Add("One Call Fulfillment Template -$");
+
+                //change format to text
+                worksheet.Cells.Style.Numberformat.Format = "@";
+
+                worksheet.Cells["A1"].LoadFromText(file, format);
+
+            
+
+                //Save the new workbook. We haven't specified the filename so use the Save as method.
+                p.SaveAs(new FileInfo(dir + @"\" + jn + ".xls"));
+            }
+
+
+
+
+
+        }
+
+
+
     }
 
-
+   
 }
 
 
