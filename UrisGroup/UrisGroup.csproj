@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBS.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="CSV.cs" />
     <Compile Include="INI.cs" />
     <Compile Include="Form1.cs">

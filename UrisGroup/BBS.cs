@@ -13,12 +13,12 @@ namespace UrisGroup
         static private string InstallFlder = "C:\\SORTANDSAVE\\SYSTEM\\";             // set sort and save system folder
         
 
-        public static void BBSNow(String en, String md, String jn,bool csv)
+        public static void BBSNow(String en, String md, String jn,bool csv,string TypeCheck)
         {
 
             DateTime Newmd = DateTime.Parse(md);                                  // Mail Date
             string ex;
-            string mjob;
+            
             string dir = Path.GetDirectoryName(en);                                //Get directory we are working in
             Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
 
@@ -37,11 +37,8 @@ namespace UrisGroup
                 // not really needed at this point
                 ex = ".xls";
             }
+
             
-
-            File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + jn + ".EXD");
-            File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + jn + ".IMD");
-
             BBSAPI.ResetMailingOptions();
             BBSAPI.SetInstallationFolder(InstallFlder);
             BBSAPI.SetOutputBase(dir + "\\" + "BBS\\");
@@ -53,15 +50,17 @@ namespace UrisGroup
             BBSAPI.SetInput(1,dir + "\\" + jn  + ".xls");
             //BBSAPI.SetTable(1, "One Call Fulfillment Template -$");
 
-            mjob = "G:\\Development\\BBS Definition Files\\URIS.JOB";
+            
 
-            int result = BBSAPI.RunMailingJob(mjob);
+            int result = BBSAPI.RunMailingJob(UrisGroup.fn);
 
-            MessageBox.Show(result.ToString());
+           // MessageBox.Show(result.ToString());
 
             //load and write to job file for mailing email
 
-            var MyIni = new IniFile("G:\\Development\\BBS Definition Files\\URIS.JOB");
+          
+
+            var MyIni = new IniFile(UrisGroup.fn);
 
             MyIni.Write("Weight", "30", "InitialInfo");
             MyIni.Write("OutputBase", dir + "\\" + "BBS", "InitialInfo");
@@ -75,7 +74,7 @@ namespace UrisGroup
             File.Delete(dir + "\\" + jn + ".EXD");
             File.Delete(dir + "\\BBS\\URIS.JOB");
 
-            File.Copy("G:\\Development\\BBS Definition Files\\URIS.JOB", dir + "\\BBS\\URIS.JOB");
+            File.Copy(UrisGroup.fn, dir + "\\BBS\\URIS.JOB");
 
         }
 

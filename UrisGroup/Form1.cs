@@ -18,7 +18,7 @@ using System.Data.SqlClient;
 namespace UrisGroup
 {
     public partial class UrisGroup : Form
-
+ 
 
 
 
@@ -27,18 +27,29 @@ namespace UrisGroup
         public UrisGroup()
         {
             InitializeComponent();
-
+            
 
 
         }
 
+       static public string EncryptedFiles;
+       static public string dir = Path.GetDirectoryName(EncryptedFiles);
+       static public string JobNumber;
+       static public string MailDate;
+       static public string fn;
+        static public string tc;
+
         public void button1_Click(object sender, EventArgs e)
         {
-            string EncryptedFiles;
+            
             string Password = "1dunn0d0u";
             string key = @"C:\TEST FOLDER\secring.skr";
-            string JobNumber = textBox1.Text;
-            string MailDate = textBox2.Text;
+           string TypeCheck = null;
+
+            JobNumber = textBox1.Text;
+            MailDate = textBox2.Text;
+
+            tc = TypChk(TypeCheck);
 
 
             if (textBox2.Text.Length == 0)
@@ -61,8 +72,7 @@ namespace UrisGroup
 
             // check if we are doing an autonet or onecall
 
-
-
+           
 
 
             listBox1.Items.Add("Selecting File ...."); // keep user updated
@@ -85,12 +95,12 @@ namespace UrisGroup
             listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
-            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv); // run BBS Job
+            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv,tc); // run BBS Job
             listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Creating Output File ....");
-            CSV.CreateData(JobNumber); // add booklet barcode and job number to export file
-            CSV.ReplaceTxt(EncryptedFiles, JobNumber); //replace £
+            CSV.CreateData(JobNumber,EncryptedFiles,tc); // add booklet barcode and job number to export file
+            CSV.ReplaceTxt(EncryptedFiles, JobNumber,tc); //replace £
             listBox1.Items.Add("*DONE*");
 
             //Composer(): // prepare file for composer and place on server
@@ -122,12 +132,58 @@ namespace UrisGroup
 
         }
 
+        public void EncryptFiles()
+        {
+
+        }
+
+        public void Composer()
+        {
+            File.Copy(dir + "\\" + tc + ".txt", @"\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Input" + "\\" + UrisGroup.tc + ".txt");
+        }
+
+        public string TypChk(string typchk)
+        {
+
+
+            if (OneCall.Checked)
+            {
+                typchk = "OneCall";
+                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + JobNumber  + ".EXD");
+                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\" + JobNumber + ".IMD");
+                fn = "G:\\Development\\BBS Definition Files\\URISO.JOB";
+            }
+            else if (AutoNet.Checked)
+            {
+                typchk = "AutoNet";
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\" + JobNumber + ".EXD");
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\" + JobNumber + ".IMD");
+                fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
+
+            }
+            else
+            {
+                MessageBox.Show("No Type Checked");
+                this.Close();
+                Application.Exit();
+                Environment.Exit(0);
+            }
+
+            return typchk;
+        }
+
+     
+
+            
+        }
+
 
 
 
 
     }
-}
+
+
    
 
 

@@ -123,14 +123,14 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(19, 129);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(222, 82);
+            this.listBox1.Size = new System.Drawing.Size(222, 160);
             this.listBox1.TabIndex = 8;
             // 
             // UrisGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 239);
+            this.ClientSize = new System.Drawing.Size(453, 307);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.AutoNet);
             this.Controls.Add(this.OneCall);

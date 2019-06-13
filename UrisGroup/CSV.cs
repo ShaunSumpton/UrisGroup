@@ -16,12 +16,30 @@ namespace UrisGroup
 {
     static class CSV
     {
+        
 
-       public static void CreateData(string jn)
+        public static void CreateData(string jn,string en, string typ)
         {
 
             int SER = 001;
-            using (var reader = new StreamReader(@"C:\TEST FOLDER\BBS\URIS_EXP.CSV")) //load CSV from BBS
+            string dir = Path.GetDirectoryName(en);
+            string temp;
+
+            if (typ == "OneCall")
+            {
+
+                 temp = "URISO";
+
+            }
+            else
+            {
+                temp = "URISA";
+            }
+
+
+
+
+            using (var reader = new StreamReader(dir + @"\BBS\"+ temp + @"_EXP.CSV")) //load CSV from BBS
             using (var csv = new CsvReader(reader))
 
 
@@ -72,10 +90,10 @@ namespace UrisGroup
 
                     }
 
-
+                   
                     
                     // output to txt file
-                    using (var textWriter = File.CreateText(@"C:\TEST FOLDER\"+ jn + @".txt"))
+                    using (var textWriter = File.CreateText(dir + "\\"+ jn + ".txt"))
                     using (var csv1 = new CsvWriter(textWriter))
                     {
                         // Write columns
@@ -106,14 +124,15 @@ namespace UrisGroup
             }
         }
 
-       public static void ReplaceTxt(string en, string jn)
+       public static void ReplaceTxt(string en, string jn,string typ)
         {
 
             string dir = Path.GetDirectoryName(en);
 
             string str = File.ReadAllText(dir + "\\" + jn + ".txt");
-            str = str.Replace("?", "£");
+            str = str.Replace("�", "£");
             File.WriteAllText(dir + "\\" + jn + ".txt", str);
+            File.Move(dir + "\\" + jn + ".txt",dir + "\\" + UrisGroup.tc + ".txt");
 
 
         }
