@@ -24,6 +24,7 @@ namespace UrisGroup
             int SER = 001;
             string dir = Path.GetDirectoryName(en);
             string temp;
+            DateTime Newmd = DateTime.Parse(UrisGroup.MailDate);
 
             if (typ == "OneCall")
             {
@@ -59,6 +60,7 @@ namespace UrisGroup
                     DataColumn newCol3 = new DataColumn("BMbarcode3", typeof(string));
                     DataColumn newCol4 = new DataColumn("BMbarcode4", typeof(string));
                     DataColumn newCol5 = new DataColumn("JobNumber", typeof(string));
+                    DataColumn newCol6 = new DataColumn("MailDate", typeof(string));
 
                     // Add new columns for Barcodes
                     dt.Columns.Add(newCol);
@@ -67,6 +69,7 @@ namespace UrisGroup
                     dt.Columns.Add(newCol3);
                     dt.Columns.Add(newCol4);
                     dt.Columns.Add(newCol5);
+                    dt.Columns.Add(newCol6);
 
                     //Set positon of new columns
                     newCol.SetOrdinal(0);
@@ -75,6 +78,7 @@ namespace UrisGroup
                     newCol3.SetOrdinal(3);
                     newCol4.SetOrdinal(4);
                     newCol5.SetOrdinal(5);
+                    newCol6.SetOrdinal(6);
 
                     //loop through each row and add data
                     foreach (DataRow row in dt.Rows)
@@ -85,6 +89,7 @@ namespace UrisGroup
                         row["BMbarcode3"] = SER.ToString("*0000000") + "0304*";   //  0000 SER 0304
                         row["BMbarcode4"] = SER.ToString("*0000000") + "0404*";   //  0000 SER 0404   
                         row["JobNumber"] = jn;
+                        row["MailDate"] = Newmd.ToString("dd MMMM yyyy"); 
 
                         SER++;
 
@@ -134,6 +139,8 @@ namespace UrisGroup
             File.WriteAllText(dir + "\\" + jn + ".txt", str);
             File.Move(dir + "\\" + jn + ".txt",dir + "\\" + UrisGroup.tc + ".txt");
 
+            File.Delete(dir + "\\" + jn + ".csv");
+            File.Delete(dir + "\\" + jn + ".xls");
 
         }
 

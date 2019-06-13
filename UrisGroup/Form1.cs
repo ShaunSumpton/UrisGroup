@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PgpCore;
-using CsvHelper;
-using System.Data.SqlClient;
 
 
 
@@ -33,23 +24,25 @@ namespace UrisGroup
         }
 
        static public string EncryptedFiles;
-       static public string dir = Path.GetDirectoryName(EncryptedFiles);
        static public string JobNumber;
        static public string MailDate;
        static public string fn;
-        static public string tc;
+       static public string tc;
+       static public string dir;
 
         public void button1_Click(object sender, EventArgs e)
         {
             
             string Password = "1dunn0d0u";
-            string key = @"C:\TEST FOLDER\secring.skr";
-           string TypeCheck = null;
+            string skey = @"C:\TEST FOLDER\secring.skr";
+            string pkey = @"C:\TEST FOLDER\pubring.skr";
+            string TypeCheck = null;
+            
 
             JobNumber = textBox1.Text;
             MailDate = textBox2.Text;
-
-            tc = TypChk(TypeCheck);
+            Application.DoEvents();
+           
 
 
             if (textBox2.Text.Length == 0)
@@ -82,6 +75,9 @@ namespace UrisGroup
             openFileDialog2.ShowDialog();
 
             EncryptedFiles = openFileDialog2.FileName; // get file path for PGP 
+            dir = Path.GetDirectoryName(EncryptedFiles);
+            tc = TypChk(TypeCheck, EncryptedFiles);
+
 
             listBox1.Items.Add("*DONE*");
 
@@ -91,7 +87,7 @@ namespace UrisGroup
             bool csv = EncryptedFiles.Contains("csv");
 
             listBox1.Items.Add("Decrypting File ....");
-            DecryptFiles(EncryptedFiles, Password, key, JobNumber, csv); // Decrypt files
+            DecryptFiles(EncryptedFiles, Password, skey, JobNumber, csv); // Decrypt files
             listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
@@ -103,7 +99,11 @@ namespace UrisGroup
             CSV.ReplaceTxt(EncryptedFiles, JobNumber,tc); //replace £
             listBox1.Items.Add("*DONE*");
 
-            //Composer(): // prepare file for composer and place on server
+            listBox1.Items.Add("Creating PDF File ....");
+            Composer(dir); // prepare file for composer and place on server
+            listBox1.Items.Add("Moving Files ....");
+            Email.MoveFiles();
+            EncryptFiles();
 
         }
 
@@ -135,27 +135,36 @@ namespace UrisGroup
         public void EncryptFiles()
         {
 
+            using (PGP pgp = new PGP())
+            {
+
+                string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
+                pgp.EncryptFile(dir + "\\Encrypt\\",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
+
+
+            }
         }
 
-        public void Composer()
+        public void Composer(string dir)
         {
-            File.Copy(dir + "\\" + tc + ".txt", @"\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Input" + "\\" + UrisGroup.tc + ".txt");
+            File.Copy(dir + "\\" + tc + ".txt", @"\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Input" + "\\" + UrisGroup.tc + ".txt");
+            File.Copy(dir + "\\" + tc + ".txt", @"\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Input" + "\\" + UrisGroup.tc + " PROOF.txt");
         }
 
-        public string TypChk(string typchk)
+        public string TypChk(string tc,string en)
         {
-
+            string dir = Path.GetDirectoryName(en);
 
             if (OneCall.Checked)
             {
-                typchk = "OneCall";
+                tc = "OneCall";
                 File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + JobNumber  + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\" + JobNumber + ".IMD");
                 fn = "G:\\Development\\BBS Definition Files\\URISO.JOB";
             }
             else if (AutoNet.Checked)
             {
-                typchk = "AutoNet";
+                tc = "AutoNet";
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\" + JobNumber + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\" + JobNumber + ".IMD");
                 fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
@@ -169,13 +178,11 @@ namespace UrisGroup
                 Environment.Exit(0);
             }
 
-            return typchk;
+            return tc;
         }
 
-     
-
-            
-        }
+        
+    }
 
 
 
