@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 using PgpCore;
+using System.IO.Compression;
+using Microsoft.Office.Interop.Outlook;
 
 
 
@@ -41,7 +43,7 @@ namespace UrisGroup
 
             JobNumber = textBox1.Text;
             MailDate = textBox2.Text;
-            Application.DoEvents();
+            System.Windows.Forms.Application.DoEvents();
            
 
 
@@ -50,7 +52,7 @@ namespace UrisGroup
 
                 MessageBox.Show("Please Enter the Mailing Date"); // check if a mailing date has been entered
                 this.Close();
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
                 Environment.Exit(0);
             }
 
@@ -59,7 +61,7 @@ namespace UrisGroup
 
                 MessageBox.Show("Please Enter the Job Number"); // check if a job number has been entered
                 this.Close();
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
                 Environment.Exit(0);
             }
 
@@ -135,11 +137,13 @@ namespace UrisGroup
         public void EncryptFiles()
         {
 
+            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + @"\Encrypt\OneCall Booklet.zip");
+
             using (PGP pgp = new PGP())
             {
 
                 string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
-                pgp.EncryptFile(dir + "\\Encrypt\\",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
+                pgp.EncryptFile(dir + "\\Encrypt\\OneCall Booklet.zip",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
 
 
             }
@@ -174,14 +178,33 @@ namespace UrisGroup
             {
                 MessageBox.Show("No Type Checked");
                 this.Close();
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
                 Environment.Exit(0);
             }
 
             return tc;
         }
 
-        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string s = "";
+
+            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
+            MailItem mailItem = app.CreateItem(OlItemType.olMailItem);
+           
+
+            mailItem.Subject = "This is the subject";
+            mailItem.To = "s.sumpton@agnortheast.com";
+           
+           // mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
+            mailItem.Importance = OlImportance.olImportanceHigh;
+            mailItem.Display(false);
+
+            var signature = mailItem.HTMLBody;
+            mailItem.HTMLBody = "This is the message." + signature;
+            mailItem.Send();
+
+        }
     }
 
 

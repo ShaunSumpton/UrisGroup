@@ -127,6 +127,14 @@
             this.listBox1.Size = new System.Drawing.Size(222, 160);
             this.listBox1.TabIndex = 8;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(308, 235);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // UrisGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

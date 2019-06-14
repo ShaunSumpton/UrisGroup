@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Microsoft.Office.Interop.Outlook;
+
+
 
 namespace UrisGroup
 {
@@ -18,7 +19,7 @@ namespace UrisGroup
             while (File.Exists(fp1) == false)
             {
                 //do Nothing
-                Thread.Sleep(500);
+                a++;
 
             }
 
@@ -29,7 +30,7 @@ namespace UrisGroup
             while (File.Exists(fp) == false)
             {
                 //do Nothing
-                Thread.Sleep(500);
+                a++;
 
             }
 
@@ -40,6 +41,25 @@ namespace UrisGroup
         }
 
 
+        static public void SendEmail()
+        {
+
+            Application app = new Application();
+            MailItem mailItem = app.CreateItem(OlItemType.olMailItem);
+
+
+            mailItem.Subject = UrisGroup.JobNumber + " " + UrisGroup.tc + "A5 16pp Booklet Proofs";
+            mailItem.To = "s.sumpton@agnortheast.com";
+
+            mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + " OneCall Booklet.pgp");//logPath is a string holding path to the log.txt file
+            mailItem.Importance = OlImportance.olImportanceHigh;
+            mailItem.Display(false);
+
+            var signature = mailItem.HTMLBody;
+            mailItem.HTMLBody = "Please see attached " + UrisGroup.tc + " Booklets"  + signature;
+            mailItem.Send();
+
+        }
 
 
 

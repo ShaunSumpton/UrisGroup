@@ -135,8 +135,8 @@ namespace UrisGroup
             string dir = Path.GetDirectoryName(en);
 
             string str = File.ReadAllText(dir + "\\" + jn + ".txt");
-            str = str.Replace("�", "£");
-            File.WriteAllText(dir + "\\" + jn + ".txt", str);
+            str = str.Replace("?", "£");
+            File.WriteAllText(dir + "\\" + jn + ".txt", str,Encoding.Default);
             File.Move(dir + "\\" + jn + ".txt",dir + "\\" + UrisGroup.tc + ".txt");
 
             File.Delete(dir + "\\" + jn + ".csv");
