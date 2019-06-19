@@ -12,29 +12,29 @@ namespace UrisGroup
 
         static public void MoveFiles()
         {
-            string fp1 = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf";
+            string fp1 = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf"; // path we are moving the files from
             int a= 0;
-            Directory.CreateDirectory(UrisGroup.dir + "\\" + "Encrypt\\");
+            Directory.CreateDirectory(UrisGroup.dir + "\\" + "Encrypt\\"); // create directory in job folder
 
             while (File.Exists(fp1) == false)
             {
                 //do Nothing
-                a++;
+                Thread.Sleep(1000);
 
             }
 
-            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf", UrisGroup.dir + "\\Imposed\\" + UrisGroup.JobNumber + "_Uris_OneCall_Booklet_IMPOSED.pdf");
+            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf", UrisGroup.dir + "\\Imposed\\" + UrisGroup.JobNumber + "_Uris_OneCall_Booklet_IMPOSED.pdf"); // move file when it exsists in folder
 
-            string fp = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf";
+            string fp = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf"; 
 
             while (File.Exists(fp) == false)
             {
                 //do Nothing
-                a++;
+                Thread.Sleep(1000);
 
             }
 
-            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber+ "_Uris_OneCall_Booklet.pdf");
+            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_OneCall_Booklet.pdf");
             File.Copy(@"G:\Development\BBS Definition Files\Uris_OneCall Insert.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_OneCall Insert.pdf");
 
             
@@ -51,12 +51,15 @@ namespace UrisGroup
             mailItem.Subject = UrisGroup.JobNumber + " " + UrisGroup.tc + "A5 16pp Booklet Proofs";
             mailItem.To = "s.sumpton@agnortheast.com";
 
-            mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + " OneCall Booklet.pgp");//logPath is a string holding path to the log.txt file
+            mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + " OneCall Booklet.pgp");
             mailItem.Importance = OlImportance.olImportanceHigh;
             mailItem.Display(false);
 
+
+
             var signature = mailItem.HTMLBody;
-            mailItem.HTMLBody = "Please see attached " + UrisGroup.tc + " Booklets"  + signature;
+            var body = "Please see attached " + UrisGroup.tc + " Booklets Proof";
+            mailItem.HTMLBody = body + signature;
             mailItem.Send();
 
         }

@@ -10,7 +10,7 @@ namespace UrisGroup
     public class BBS
     {
 
-        static private string InstallFlder = "C:\\SORTANDSAVE\\SYSTEM\\";             // set sort and save system folder
+        private static readonly string InstallFlder = "C:\\SORTANDSAVE\\SYSTEM\\";             // set sort and save system folder
         
 
         public static void BBSNow(String en, String md, String jn,bool csv,string TypeCheck)
@@ -20,7 +20,7 @@ namespace UrisGroup
             string ex;
             
             string dir = Path.GetDirectoryName(en);                                //Get directory we are working in
-            Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
+            //Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
 
 
 

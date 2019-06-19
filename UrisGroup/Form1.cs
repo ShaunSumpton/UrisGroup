@@ -19,10 +19,9 @@ namespace UrisGroup
     {
         public UrisGroup()
         {
-            InitializeComponent();
+
+        InitializeComponent();
             
-
-
         }
 
        static public string EncryptedFiles;
@@ -78,19 +77,15 @@ namespace UrisGroup
 
             EncryptedFiles = openFileDialog2.FileName; // get file path for PGP 
             dir = Path.GetDirectoryName(EncryptedFiles);
-            tc = TypChk(TypeCheck, EncryptedFiles);
 
+            tc = TypChk(TypeCheck, EncryptedFiles);  // check what type of file we are working with
 
-            listBox1.Items.Add("*DONE*");
-
-
-
-            // check what type of file we are working with
-            bool csv = EncryptedFiles.Contains("csv");
+            bool csv = EncryptedFiles.Contains("csv"); // check if working with csv and if we need to convert it to xls
 
             listBox1.Items.Add("Decrypting File ....");
             DecryptFiles(EncryptedFiles, Password, skey, JobNumber, csv); // Decrypt files
             listBox1.Items.Add("*DONE*");
+            
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
             BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv,tc); // run BBS Job
@@ -103,9 +98,19 @@ namespace UrisGroup
 
             listBox1.Items.Add("Creating PDF File ....");
             Composer(dir); // prepare file for composer and place on server
+
             listBox1.Items.Add("Moving Files ....");
-            Email.MoveFiles();
-            EncryptFiles();
+            Email.MoveFiles();  // Move Files from composer 
+             listBox1.Items.Add("*DONE*");
+
+            EncryptFiles(); // Encrypt Files for email
+            listBox1.Items.Add("Encrypt Files ....");
+            listBox1.Items.Add("*DONE*");
+
+            Email.SendEmail(); // Create and send email
+            listBox1.Items.Add("Send Email ....");
+            listBox1.Items.Add("*DONE*");
+
 
         }
 
@@ -137,13 +142,13 @@ namespace UrisGroup
         public void EncryptFiles()
         {
 
-            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + @"\Encrypt\OneCall Booklet.zip");
+            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + @"\OneCall Booklet.zip");
 
             using (PGP pgp = new PGP())
             {
 
                 string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
-                pgp.EncryptFile(dir + "\\Encrypt\\OneCall Booklet.zip",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
+                pgp.EncryptFile(dir + "\\OneCall Booklet.zip",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
 
 
             }
@@ -158,19 +163,20 @@ namespace UrisGroup
         public string TypChk(string tc,string en)
         {
             string dir = Path.GetDirectoryName(en);
+            Directory.CreateDirectory(dir + "\\" + "BBS\\");
 
             if (OneCall.Checked)
             {
                 tc = "OneCall";
-                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\" + JobNumber  + ".EXD");
-                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\" + JobNumber + ".IMD");
+                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\BBS\\" + JobNumber  + ".EXD");
+                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
                 fn = "G:\\Development\\BBS Definition Files\\URISO.JOB";
             }
             else if (AutoNet.Checked)
             {
                 tc = "AutoNet";
-                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\" + JobNumber + ".EXD");
-                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\" + JobNumber + ".IMD");
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\BBS\\" + JobNumber + ".EXD");
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
                 fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
 
             }
@@ -183,25 +189,29 @@ namespace UrisGroup
             }
 
             return tc;
-        }
+        } // check for differnt types
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string s = "";
+            string tc = "OneCall";
+            string JobNumber = "12345";
+            string dir = @"C:\TEST FOLDER";
 
-            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
-            MailItem mailItem = app.CreateItem(OlItemType.olMailItem);
-           
+            
 
-            mailItem.Subject = "This is the subject";
+            var objOutlook = new Microsoft.Office.Interop.Outlook.Application();
+            var mailItem = (MailItem)(objOutlook.CreateItem(OlItemType.olMailItem));
+
+
             mailItem.To = "s.sumpton@agnortheast.com";
-           
-           // mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
+            mailItem.Subject = JobNumber + " " + tc + "A5 16pp Booklet Proofs";
+            mailItem.Attachments.Add(dir + "\\" + JobNumber + " OneCall Booklet.pgp");
             mailItem.Importance = OlImportance.olImportanceHigh;
-            mailItem.Display(false);
+            var body = "Please see attached " + tc + " Booklets Proof";
 
-            var signature = mailItem.HTMLBody;
-            mailItem.HTMLBody = "This is the message." + signature;
+            mailItem.Display();
+            mailItem.HTMLBody = body + mailItem.HTMLBody;
+
             mailItem.Send();
 
         }
