@@ -12,7 +12,11 @@ namespace UrisGroup
 
         static public void MoveFiles()
         {
-            string fp1 = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf"; // path we are moving the files from
+
+         
+
+
+            string fp1 = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\" + UrisGroup.tc + ".pdf"; // path we are moving the files from
             int a= 0;
             Directory.CreateDirectory(UrisGroup.dir + "\\" + "Encrypt\\"); // create directory in job folder
 
@@ -23,10 +27,12 @@ namespace UrisGroup
 
             }
 
-            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall.pdf", UrisGroup.dir + "\\Imposed\\" + UrisGroup.JobNumber + "_Uris_OneCall_Booklet_IMPOSED.pdf"); // move file when it exsists in folder
+            string filePth = @"\" + UrisGroup.segment + @"Imposed\" + UrisGroup.JobNumber + @"_Uris_" + UrisGroup.tc + "_Booklet_IMPOSED.pdf";
 
-            string fp = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf"; 
+            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\"+ UrisGroup.tc + ".pdf",filePth); // move file when it exsists in folder
 
+            string fp = @"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\" + UrisGroup.tc +" PROOF.pdf"; 
+                
             while (File.Exists(fp) == false)
             {
                 //do Nothing
@@ -34,8 +40,8 @@ namespace UrisGroup
 
             }
 
-            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\OneCall PROOF.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_OneCall_Booklet.pdf");
-            File.Copy(@"G:\Development\BBS Definition Files\Uris_OneCall Insert.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_OneCall Insert.pdf");
+            File.Move(@"\\\6.1.1.76\Composer Presets\VDP Presets\Unsplit\Output\" + UrisGroup.tc + " PROOF.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_" + UrisGroup.tc + "_Booklet.pdf");
+            File.Copy(@"G:\Development\BBS Definition Files\Uris_" + UrisGroup.tc + " Insert.pdf", UrisGroup.dir + "\\Encrypt\\" + UrisGroup.JobNumber + "_Uris_" + UrisGroup.tc + " Insert.pdf");
 
             
         }
@@ -49,7 +55,7 @@ namespace UrisGroup
 
 
             mailItem.Subject = UrisGroup.JobNumber + " " + UrisGroup.tc + "A5 16pp Booklet Proofs";
-            mailItem.To = "s.sumpton@agnortheast.com";
+            mailItem.To = "Data Processsing Group<dpo@agne.local>; 'DG Admin' < administration@directgroup.co.uk >; 'DG Data Management' < datamanagement@directgroup.co.uk >; Gary Bell<G.Bell @agnortheast.com>; Sean Costigan<S.Costigan @agnortheast.com>";
 
             mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + " OneCall Booklet.pgp");
             mailItem.Importance = OlImportance.olImportanceHigh;
@@ -60,7 +66,7 @@ namespace UrisGroup
             var signature = mailItem.HTMLBody;
             var body = "Please see attached " + UrisGroup.tc + " Booklets Proof";
             mailItem.HTMLBody = body + signature;
-            mailItem.Send();
+            //mailItem.Send();
 
         }
 

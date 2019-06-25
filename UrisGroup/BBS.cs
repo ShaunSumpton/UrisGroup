@@ -4,6 +4,7 @@ using SortAndSave;
 using MadMilkman.Ini;
 using System.Windows.Forms;
 using System.ComponentModel;
+using Microsoft.Office.Interop;
 
 namespace UrisGroup
 {
@@ -34,7 +35,13 @@ namespace UrisGroup
             }
             else
             {
-                // not really needed at this point
+
+                CSV.TocCsvthenXLS(jn, dir);
+                //CSV.ConvertCSV(jn, dir);
+
+                // Tidy up xls
+
+
                 ex = ".xls";
             }
 

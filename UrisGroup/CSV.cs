@@ -9,16 +9,16 @@ using OfficeOpenXml.Drawing.Chart;
 using System.Globalization;
 using CsvHelper;
 using System.Data;
-
-
+using Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace UrisGroup
 {
     static class CSV
     {
-        
 
-        public static void CreateData(string jn,string en, string typ)
+
+        public static void CreateData(string jn, string en, string typ)
         {
 
             int SER = 001;
@@ -29,7 +29,7 @@ namespace UrisGroup
             if (typ == "OneCall")
             {
 
-                 temp = "URISO";
+                temp = "URISO";
 
             }
             else
@@ -40,7 +40,7 @@ namespace UrisGroup
 
 
 
-            using (var reader = new StreamReader(dir + @"\BBS\"+ temp + @"_EXP.CSV")) //load CSV from BBS
+            using (var reader = new StreamReader(dir + @"\BBS\" + temp + @"_EXP.CSV")) //load CSV from BBS
             using (var csv = new CsvReader(reader))
 
 
@@ -50,7 +50,7 @@ namespace UrisGroup
 
                 using (var dr = new CsvDataReader(csv))
                 {
-                    var dt = new DataTable();
+                    var dt = new System.Data.DataTable();
                     dt.Load(dr);
 
                     // Create new columns to be appended the start of the datatable
@@ -89,16 +89,16 @@ namespace UrisGroup
                         row["BMbarcode3"] = SER.ToString("*0000000") + "0304*";   //  0000 SER 0304
                         row["BMbarcode4"] = SER.ToString("*0000000") + "0404*";   //  0000 SER 0404   
                         row["JobNumber"] = jn;
-                        row["MailDate"] = Newmd.ToString("dd MMMM yyyy"); 
+                        row["MailDate"] = Newmd.ToString("dd MMMM yyyy");
 
                         SER++;
 
                     }
 
-                   
-                    
+
+
                     // output to txt file
-                    using (var textWriter = File.CreateText(dir + "\\"+ jn + ".txt"))
+                    using (var textWriter = File.CreateText(dir + "\\" + jn + ".txt"))
                     using (var csv1 = new CsvWriter(textWriter))
                     {
                         // Write columns
@@ -120,16 +120,13 @@ namespace UrisGroup
                     }
 
 
-
-
-
                 }
 
 
             }
         }
 
-       public static void ReplaceTxt(string en, string jn,string typ)
+        public static void ReplaceTxt(string en, string jn, string typ)
         {
 
             string dir = Path.GetDirectoryName(en);
@@ -137,15 +134,15 @@ namespace UrisGroup
             string str = File.ReadAllText(dir + "\\" + jn + ".txt");
             str = str.Replace("�", "£");
             str = str.Replace("?", "£");
-            File.WriteAllText(dir + "\\" + jn + ".txt", str,Encoding.Default);
-            File.Move(dir + "\\" + jn + ".txt",dir + "\\" + UrisGroup.tc + ".txt");
+            File.WriteAllText(dir + "\\" + jn + ".txt", str, Encoding.Default);
+            File.Move(dir + "\\" + jn + ".txt", dir + "\\" + UrisGroup.tc + ".txt");
 
             File.Delete(dir + "\\" + jn + ".csv");
             File.Delete(dir + "\\" + jn + ".xls");
 
         }
 
-       public static void ConvertCSV(string jn, string dir)
+        public static void ConvertCSV(string jn, string dir)
         {
 
             var format = new ExcelTextFormat();
@@ -156,7 +153,7 @@ namespace UrisGroup
                 eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,
                 eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,eDataTypes.String,
                 eDataTypes.String,eDataTypes.String,eDataTypes.String };
-             
+
 
             FileInfo file = new FileInfo(dir + "\\" + jn + ".csv");
 
@@ -171,10 +168,11 @@ namespace UrisGroup
 
                 worksheet.Cells["A1"].LoadFromText(file, format);
 
-            
+
 
                 //Save the new workbook. We haven't specified the filename so use the Save as method.
                 p.SaveAs(new FileInfo(dir + @"\" + jn + ".xls"));
+
             }
 
 
@@ -183,14 +181,109 @@ namespace UrisGroup
 
         }
 
+        public static void TocCsvthenXLS(string jn, string dir)
+        {
+            string fileName = dir + "\\" + jn + ".xls";
+
+            Application application = new Application();
+
+            Workbook exceldoc = application.Workbooks.Open(fileName);
+            Worksheet ws;
+
+            if (UrisGroup.tc == "Onecall")
+            {
+                 ws = (Worksheet)exceldoc.Sheets["One Call Fulfillment Template -"];
+            }
+            else
+            {
+                ws = (Worksheet)exceldoc.Sheets["AG Tab"];
+            }
 
 
+
+
+            int LastRow = ws.UsedRange.Rows.Count;
+            int LastCol = ws.UsedRange.Columns.Count;
+            Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
+            Range range = ws.get_Range("A1", last);
+            int lastUsedRow = last.Row;
+
+            ws.Columns.ClearFormats();
+            ws.Rows.ClearFormats();
+
+            // Detect Last used Row - Ignore cells that contains formulas that result in blank values
+            int LastRow1 = ws.Cells.Find(
+                            "*",
+                            Missing.Value,
+                            XlFindLookIn.xlValues,
+                            XlLookAt.xlWhole,
+                            XlSearchOrder.xlByRows,
+                            XlSearchDirection.xlPrevious,
+                            false,
+                            Missing.Value,
+                            Missing.Value).Row;
+
+
+
+            Range From = ws.Range[ws.Cells[1, 1], ws.Cells[LastRow1, LastCol]];
+
+            exceldoc.Sheets.Add();
+            Worksheet ws1 = (Worksheet)exceldoc.Sheets[2];
+            ws1.Name = "newsheet";
+            Range to = ws1.Range[ws1.Cells[1, 1], ws1.Cells[LastRow1, LastCol]];
+
+
+            From.Copy(Type.Missing);
+            to.PasteSpecial(XlPasteType.xlPasteAll, XlPasteSpecialOperation.xlPasteSpecialOperationNone, Type.Missing, Type.Missing);
+
+            ws.Delete();
+
+
+            if (UrisGroup.tc == "OneCall")
+            {
+                ws1.Name = "One Call Fulfillment Template -";
+            }
+            else
+            {
+                ws1.Name = "AG Tab";
+            }
+
+            exceldoc.Sheets["Sheet1"].Delete();
+
+            Range e = (Range)ws1.Cells[1,5];
+            e.EntireColumn.NumberFormat = "DD/MM/YYYY";  // date
+
+            Range k = (Range)ws1.Cells[1, 11];
+            k.EntireColumn.NumberFormat = "£#,##0.00"; // currency
+
+            Range l = (Range)ws1.Cells[1, 12];
+            l.EntireColumn.NumberFormat = "DD/MM/YYYY";  // date
+
+            Range n = (Range)ws1.Cells[1, 13];
+            n.EntireColumn.NumberFormat = "£#,##0.00"; // currency
+
+            Range m = (Range)ws1.Cells[1, 14];
+            m.EntireColumn.NumberFormat = "DD/MM/YYYY";  // date
+
+
+
+            exceldoc.Save();
+            exceldoc.Close();
+
+
+
+           
+        }
+
+       
+        
     }
-
-   
 }
 
 
+
+
+    
 
     
 

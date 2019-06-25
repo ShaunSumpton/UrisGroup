@@ -30,6 +30,7 @@ namespace UrisGroup
        static public string fn;
        static public string tc;
        static public string dir;
+        static public string segment;
 
         public void button1_Click(object sender, EventArgs e)
         {
@@ -165,6 +166,9 @@ namespace UrisGroup
             string dir = Path.GetDirectoryName(en);
             Directory.CreateDirectory(dir + "\\" + "BBS\\");
 
+            int index = UrisGroup.dir.LastIndexOf(@"\");
+            segment = UrisGroup.dir.Substring(1,index);
+
             if (OneCall.Checked)
             {
                 tc = "OneCall";
@@ -174,7 +178,7 @@ namespace UrisGroup
             }
             else if (AutoNet.Checked)
             {
-                tc = "AutoNet";
+                tc = "AutoNet1";
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\BBS\\" + JobNumber + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
                 fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
