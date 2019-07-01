@@ -60,28 +60,52 @@ namespace UrisGroup
             
 
             int result = BBSAPI.RunMailingJob(UrisGroup.fn);
+            string dataSr;
+            string FlePth = dir + "\\" + jn + ".xls";
 
-           // MessageBox.Show(result.ToString());
+            // MessageBox.Show(result.ToString());
 
             //load and write to job file for mailing email
 
-          
+            if (UrisGroup.tc == "OneCall")
+            {
+                dataSr = @"""OneCall"",""OneCall""," + FlePth + @",""31/12/2199"",""'One Call Fulfillment Template -$'""";
+                File.Copy(@"G:\Development\BBS Definition Files\URISOA.JOB", dir + "\\BBS\\URIS.JOB");
+            }
+            else
+            {
+                dataSr = @"""AutoNet"",""AutoNet""," + FlePth + @",""31/12/2199"",""'AG Tab$'""";
+                File.Copy(@"G:\Development\BBS Definition Files\URISOA.JOB", dir + "\\BBS\\URIS.JOB");
+            }
 
-            var MyIni = new IniFile(UrisGroup.fn);
+
+
+            var MyIni = new IniFile(dir + "\\BBS\\URIS.JOB");
 
             MyIni.Write("Weight", "30", "InitialInfo");
             MyIni.Write("OutputBase", dir + "\\" + "BBS", "InitialInfo");
             MyIni.Write("Description", jn + " URIS", "InitialInfo");
             MyIni.Write("JobReference", jn + " URIS", "InitialInfo");
+            MyIni.Write("CollectionDate", Newmd.ToString("dd/MM/yyyy"), "InitialInfo");
+            MyIni.Write("HandoverDate", Newmd.AddDays(1).ToString("dd/MM/yyyy"), "InitialInfo");
+            MyIni.Write("", dataSr, "Data Sources");
 
+           
+            
+           
+
+            string text = File.ReadAllText(dir + "\\BBS\\URIS.JOB");
+            text = text.Replace(((char)34).ToString() + "=", ((char)34).ToString());
+            text = text.Replace("=" + ((char)34).ToString(), ((char)34).ToString());
+            File.WriteAllText(dir + "\\BBS\\URIS.JOB", text);
 
             // clean up files
 
             File.Delete(dir + "\\" + jn + ".IMD");
             File.Delete(dir + "\\" + jn + ".EXD");
-            File.Delete(dir + "\\BBS\\URIS.JOB");
 
-            File.Copy(UrisGroup.fn, dir + "\\BBS\\URIS.JOB");
+            //File.Delete(dir + "\\BBS\\URIS.JOB");
+            //File.Copy(UrisGroup.fn, dir + "\\BBS\\URIS.JOB");
 
         }
 

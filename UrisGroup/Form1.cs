@@ -143,13 +143,13 @@ namespace UrisGroup
         public void EncryptFiles()
         {
 
-            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + @"\OneCall Booklet.zip");
+            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + "\\" + tc + " Booklet.zip");
 
             using (PGP pgp = new PGP())
             {
 
                 string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
-                pgp.EncryptFile(dir + "\\OneCall Booklet.zip",dir + "\\" + JobNumber + " OneCall Booklet.pgp",publicKeys,true,true);
+                pgp.EncryptFile(dir + "\\OneCall Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
 
 
             }
