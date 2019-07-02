@@ -13,4 +13,4 @@ Project is created with:
 * HP Composer
 
 ## Setup
-To run this project, Download the repo from GitHub
+To run this project, Download the repo from GitHub.

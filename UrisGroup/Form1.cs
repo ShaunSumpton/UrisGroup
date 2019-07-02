@@ -149,7 +149,7 @@ namespace UrisGroup
             {
 
                 string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
-                pgp.EncryptFile(dir + "\\OneCall Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
+                pgp.EncryptFile(dir + "\\" + tc + " Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
 
 
             }
