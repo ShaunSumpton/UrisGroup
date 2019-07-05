@@ -36,13 +36,14 @@ namespace UrisGroup
         {
             
             string Password = "1dunn0d0u";
-            string skey = @"C:\TEST FOLDER\secring.skr";
-            string pkey = @"C:\TEST FOLDER\pubring.skr";
+            string skey = @"\\6.1.1.118\c\TEST FOLDER\secring.skr";
+            string pkey = @"\\6.1.1.118\c\TEST FOLDER\pubring.skr";
             string TypeCheck = null;
             
 
             JobNumber = textBox1.Text;
             MailDate = textBox2.Text;
+
             System.Windows.Forms.Application.DoEvents();
            
 
@@ -148,7 +149,7 @@ namespace UrisGroup
             using (PGP pgp = new PGP())
             {
 
-                string[] publicKeys = Directory.GetFiles(@"C:\TEST FOLDER\Keys", "*asc");
+                string[] publicKeys = Directory.GetFiles(@"\\6.1.1.118\c\TEST FOLDER\Keys", "*asc");
                 pgp.EncryptFile(dir + "\\" + tc + " Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
 
 
@@ -199,7 +200,7 @@ namespace UrisGroup
         {
             string tc = "OneCall";
             string JobNumber = "12345";
-            string dir = @"C:\TEST FOLDER";
+            string dir = @"\\6.1.1.118\c\TEST FOLDER";
 
             
 

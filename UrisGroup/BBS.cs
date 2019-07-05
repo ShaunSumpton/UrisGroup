@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
 using SortAndSave;
-using MadMilkman.Ini;
-using System.Windows.Forms;
-using System.ComponentModel;
-using Microsoft.Office.Interop;
 
 namespace UrisGroup
 {
