@@ -36,8 +36,8 @@ namespace UrisGroup
         {
             
             string Password = "1dunn0d0u";
-            string skey = @"\\6.1.1.118\c\TEST FOLDER\secring.skr";
-            string pkey = @"\\6.1.1.118\c\TEST FOLDER\pubring.skr";
+            string skey = @"\\6.1.1.144\Company\Development\BBS Definition Files\secring.skr";
+            string pkey = @"\\6.1.1.144\Company\Development\BBS Definition Files\pubring.skr";
             string TypeCheck = null;
             
 
@@ -149,7 +149,7 @@ namespace UrisGroup
             using (PGP pgp = new PGP())
             {
 
-                string[] publicKeys = Directory.GetFiles(@"\\6.1.1.118\c\TEST FOLDER\Keys", "*asc");
+                string[] publicKeys = Directory.GetFiles(@"\\6.1.1.144\Company\Development\BBS Definition Files\Keys", "*asc");
                 pgp.EncryptFile(dir + "\\" + tc + " Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
 
 

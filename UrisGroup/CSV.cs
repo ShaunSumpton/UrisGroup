@@ -133,7 +133,7 @@ namespace UrisGroup
             File.Move(dir + "\\" + jn + ".txt", dir + "\\" + UrisGroup.tc + ".txt");
 
             File.Delete(dir + "\\" + jn + ".csv");
-            File.Delete(dir + "\\" + jn + ".xls");
+            //File.Delete(dir + "\\" + jn + ".xls");
 
         }
 
@@ -185,7 +185,7 @@ namespace UrisGroup
             Workbook exceldoc = application.Workbooks.Open(fileName);
             Worksheet ws;
 
-            if (UrisGroup.tc == "Onecall")
+            if (UrisGroup.tc == "OneCall")
             {
                  ws = (Worksheet)exceldoc.Sheets["One Call Fulfillment Template -"];
             }
