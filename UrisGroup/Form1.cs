@@ -143,14 +143,19 @@ namespace UrisGroup
 
         public void EncryptFiles()
         {
-
+            
             ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + "\\" + tc + " Booklet.zip");
+
+            if (tc == "AutoNet1")
+            {
+                tc = "Atlanta";
+            }
 
             using (PGP pgp = new PGP())
             {
 
                 string[] publicKeys = Directory.GetFiles(@"\\6.1.1.144\Company\Development\BBS Definition Files\Keys", "*asc");
-                pgp.EncryptFile(dir + "\\" + tc + " Booklet.zip",dir + "\\" + JobNumber + tc +  " Booklet.pgp",publicKeys,true,true);
+                pgp.EncryptFile(dir + "\\" + tc + " Booklet.zip",dir + "\\" + JobNumber + " " + tc +  " Booklet.pgp",publicKeys,true,true);
 
 
             }

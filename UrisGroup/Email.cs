@@ -52,7 +52,12 @@ namespace UrisGroup
 
             Application app = new Application();
             MailItem mailItem = app.CreateItem(OlItemType.olMailItem);
+            
 
+            if (UrisGroup.tc == "AutoNet1")
+                {
+                UrisGroup.tc = "Atlanta";
+                }
 
             mailItem.Subject = UrisGroup.JobNumber + " " + UrisGroup.tc + "A5 16pp Booklet Proofs";
             mailItem.To = "Data Processsing Group<dpo@agne.local>; 'DG Admin' < administration@directgroup.co.uk >; 'DG Data Management' < datamanagement@directgroup.co.uk >; Gary Bell; Sean Costigan";

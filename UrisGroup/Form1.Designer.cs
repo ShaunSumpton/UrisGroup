@@ -113,10 +113,10 @@
             this.AutoNet.Font = new System.Drawing.Font("Open Sans", 14F);
             this.AutoNet.Location = new System.Drawing.Point(138, 89);
             this.AutoNet.Name = "AutoNet";
-            this.AutoNet.Size = new System.Drawing.Size(104, 30);
+            this.AutoNet.Size = new System.Drawing.Size(95, 30);
             this.AutoNet.TabIndex = 7;
             this.AutoNet.TabStop = true;
-            this.AutoNet.Text = "AutoNet";
+            this.AutoNet.Text = "Atlanta";
             this.AutoNet.UseVisualStyleBackColor = true;
             // 
             // listBox1
