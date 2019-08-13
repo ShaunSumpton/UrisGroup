@@ -70,7 +70,7 @@ namespace UrisGroup
             }
             else
             {
-                dataSr = @"""AutoNet"",""AutoNet""," + FlePth + @",""31/12/2199"",""'AG Tab$'""";
+                dataSr = @"""AutoNet"",""AutoNet""," + FlePth + @",""31/12/2199"",""'AG Tab$'""";  // 'AG Tab$'
                 File.Copy(@"G:\Development\BBS Definition Files\URISOA.JOB", dir + "\\BBS\\URIS.JOB");
             }
 

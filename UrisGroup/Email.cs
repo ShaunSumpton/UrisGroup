@@ -62,7 +62,7 @@ namespace UrisGroup
             mailItem.Subject = UrisGroup.JobNumber + " " + UrisGroup.tc + "A5 16pp Booklet Proofs";
             mailItem.To = "Data Processsing Group<dpo@agne.local>; 'DG Admin' < administration@directgroup.co.uk >; 'DG Data Management' < datamanagement@directgroup.co.uk >; Gary Bell; Sean Costigan";
 
-            mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + UrisGroup.tc +  " Booklet.pgp");
+            mailItem.Attachments.Add(UrisGroup.dir + "\\" + UrisGroup.JobNumber + " " + UrisGroup.tc + " Booklet.pgp");
             mailItem.Importance = OlImportance.olImportanceHigh;
             mailItem.Display(false);
 
