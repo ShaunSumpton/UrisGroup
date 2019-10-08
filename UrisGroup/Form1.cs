@@ -143,15 +143,15 @@ namespace UrisGroup
 
         public void EncryptFiles()
         {
-            
-            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + "\\" + tc + " Booklet.zip");
 
             if (tc == "AutoNet1")
             {
                 tc = "Atlanta";
             }
 
-            using (PGP pgp = new PGP())
+            ZipFile.CreateFromDirectory(dir + @"\Encrypt\", dir + "\\" + tc + " Booklet.zip");
+
+          using (PGP pgp = new PGP())
             {
 
                 string[] publicKeys = Directory.GetFiles(@"\\6.1.1.144\Company\Development\BBS Definition Files\Keys", "*asc");
@@ -180,13 +180,21 @@ namespace UrisGroup
                 tc = "OneCall";
                 File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\BBS\\" + JobNumber  + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
+
+               // File.Copy("", dir + "\\Envcrypt\\" + JobNumber + ".pdf");
+
                 fn = "G:\\Development\\BBS Definition Files\\URISO.JOB";
+
             }
             else if (AutoNet.Checked)
             {
                 tc = "AutoNet1";
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\BBS\\" + JobNumber + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
+
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.IMD",true);
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.EXD",true);
+
                 fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
 
             }
