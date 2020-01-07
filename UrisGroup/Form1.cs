@@ -68,7 +68,7 @@ namespace UrisGroup
 
             // check if we are doing an autonet or onecall
 
-           
+
 
 
             listBox1.Items.Add("Selecting File ...."); // keep user updated
@@ -87,7 +87,7 @@ namespace UrisGroup
             listBox1.Items.Add("Decrypting File ....");
             DecryptFiles(EncryptedFiles, Password, skey, JobNumber, csv); // Decrypt files
             listBox1.Items.Add("*DONE*");
-            
+
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
             BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv,tc); // run BBS Job

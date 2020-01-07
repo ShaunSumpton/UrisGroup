@@ -154,9 +154,25 @@ namespace UrisGroup
 
             using (var p = new ExcelPackage())
             {
+                var worksheet = p.Workbook.Worksheets.Add("Holding");
+                worksheet.Name = "Test";
 
                 //Add the sheet to the workbook 
-                ExcelWorksheet worksheet = p.Workbook.Worksheets.Add("One Call Fulfillment Template -$");
+              
+                if (UrisGroup.tc == "OneCall")
+                {
+                    worksheet.Name = "One Call Fulfillment Template -";
+
+                }
+                else
+                {
+
+                    worksheet.Name = "AG Tab";
+                      // worksheet = p.Workbook.Worksheets.Add("AG Tab");
+                }
+
+
+                
 
                 //change format to text
                 worksheet.Cells.Style.Numberformat.Format = "@";
