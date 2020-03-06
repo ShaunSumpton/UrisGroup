@@ -90,7 +90,7 @@ namespace UrisGroup
 
 
             listBox1.Items.Add("Prepearing Mailing Job ....");
-            BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv,tc); // run BBS Job
+           BBS.BBSNow(EncryptedFiles, MailDate, JobNumber, csv,tc); // run BBS Job
             listBox1.Items.Add("*DONE*");
 
             listBox1.Items.Add("Creating Output File ....");
@@ -178,10 +178,10 @@ namespace UrisGroup
             if (OneCall.Checked)
             {
                 tc = "OneCall";
-                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\BBS\\" + JobNumber  + ".EXD");
+                File.Copy("G:\\Development\\BBS Definition Files\\OneCall.EXD", dir + "\\BBS\\" + JobNumber + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\OneCall.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
 
-               // File.Copy("", dir + "\\Envcrypt\\" + JobNumber + ".pdf");
+                // File.Copy("", dir + "\\Envcrypt\\" + JobNumber + ".pdf");
 
                 fn = "G:\\Development\\BBS Definition Files\\URISO.JOB";
 
@@ -192,8 +192,8 @@ namespace UrisGroup
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", dir + "\\BBS\\" + JobNumber + ".EXD");
                 File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", dir + "\\BBS\\" + JobNumber + ".IMD");
 
-                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.IMD",true);
-                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.EXD",true);
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.IMD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.IMD", true);
+                File.Copy("G:\\Development\\BBS Definition Files\\AutoNet.EXD", "C:\\SORTANDSAVE\\PARAMS\\AutoNet.EXD", true);
 
                 fn = "G:\\Development\\BBS Definition Files\\URISA.JOB";
 

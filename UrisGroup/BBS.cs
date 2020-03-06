@@ -17,7 +17,7 @@ namespace UrisGroup
             string ex;
             
             string dir = Path.GetDirectoryName(en);                                //Get directory we are working in
-            //Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
+            Directory.CreateDirectory(dir + "\\" + "BBS\\");                     // create a folder for BBS Files
 
 
 
